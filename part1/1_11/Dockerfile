@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 RUN apt-get -y update
 RUN apt-get -y install git
 
-# Clone only the Spring project
+# Clone only the project
 RUN git init
 RUN git remote add -f origin https://github.com/docker-hy/material-applications.git
 RUN git config core.sparseCheckout true
