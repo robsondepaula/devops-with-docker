@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+    restart: unless-stopped
+  redis:
+    image: redis
+    restart: unless-stopped
+  hello-backend:
+    build: ./backend
+    environment:
+      REDIS_HOST: redis
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - 8080:8080
+  hello-frontend:
+    build: ./frontend
+    depends_on:
+      - hello-backend
+    ports:
+      - 5000:5000
